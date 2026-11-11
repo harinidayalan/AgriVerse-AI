@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}CropMatch AI – Intelligent Crop Recommendation{% endblock %}
+{% block page_title %}CropMatch AI{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-wheat-awn"></i> CropMatch AI</h2>
+        <p class="section-subtitle">Evidence-based crop recommendation engine balancing soil characteristics, seasonal rainfall, water availability, and rotational benefits.</p>
+    </div>
+
+    <div class="doctor-grid">
+        <!-- Input Parameters Form -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-sliders"></i> Agronomic Farm Parameters</h3>
+                <span class="badge-status badge-verified">Recommendation Engine</span>
+            </div>
+            <form id="cropMatchForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Farm Location / District</label>
+                        <input type="text" id="cropLocation" class="form-control" value="Coimbatore, Tamil Nadu" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Soil Type</label>
+                        <select id="cropSoilType" class="form-control" required>
+                            <option value="Red Loamy Soil" selected>Red Loamy Soil</option>
+                            <option value="Black Cotton Soil">Black Cotton Soil</option>
+                            <option value="Alluvial Soil">Alluvial Soil</option>
+                            <option value="Clayey Loam">Clayey Loam</option>
+                            <option value="Sandy Loam">Sandy Loam</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Soil pH Level</label>
+                        <input type="number" step="0.1" id="cropPh" class="form-control" value="6.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Farming Season</label>
+                        <select id="cropSeason" class="form-control" required>
+                            <option value="Kharif (Monsoon / Autumn)" selected>Kharif (Monsoon / Autumn)</option>
+                            <option value="Rabi (Winter / Spring)">Rabi (Winter / Spring)</option>
+                            <option value="Zaid (Summer)">Zaid (Summer)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Water Availability</label>
+                        <select id="cropWater" class="form-control" required>
+                            <option value="Moderate (Borewell & Seasonal Canal)" selected>Moderate (Borewell & Seasonal Canal)</option>
+                            <option value="Abundant (Perennial Canal / River)">Abundant (Perennial Canal / River)</option>
+                            <option value="Scarce (Rainfed Only / Groundwater Stress)">Scarce (Rainfed Only / Groundwater Stress)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Previous Crop Harvested</label>
+                        <input type="text" id="cropPrevCrop" class="form-control" placeholder="e.g. Blackgram / Pulses (for rotation advantage)">
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top:10px;">
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="cropLang" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button type="submit" class="btn btn-primary btn-block" id="btnMatchCrops">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Match Suitable Crops
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="card-alert alert-info" style="margin-top:16px;">
+                <i class="fa-solid fa-circle-info"></i>
+                <span>AgriVerse recommendations are grounded in agronomic suitability and do not guarantee market profitability or maximum yield.</span>
+            </div>
+        </div>
+
+        <!-- Output Recommendations -->
+        <div class="dashboard-card" id="cropResultCard">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-seedling"></i> Recommended Crops</h3>
+                <span class="badge-status badge-verified" id="cropResultBadge">Ready</span>
+            </div>
+            <div class="card-body" id="cropRecommendationOutput">
+                <div class="empty-state-box">
+                    <i class="fa-solid fa-wheat-awn empty-icon"></i>
+                    <h4>Ready to Match Crops</h4>
+                    <p class="text-muted">Adjust your farm parameters on the left and click "Match Suitable Crops" to generate evidence-aware crop options.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

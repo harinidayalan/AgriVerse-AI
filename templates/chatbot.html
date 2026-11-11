@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block title %}Agri AI Chat – Bilingual Agricultural Advisor{% endblock %}
+{% block page_title %}Agri AI Chat{% endblock %}
+
+{% block content %}
+<div class="chat-layout">
+    <!-- Chat Sessions Sidebar -->
+    <aside class="chat-sessions-sidebar">
+        <button class="btn btn-primary btn-block" id="btnNewChat">
+            <i class="fa-solid fa-plus"></i> New Consultation
+        </button>
+        
+        <div class="sessions-header">
+            <span>Recent Conversations</span>
+            <button id="btnRefreshSessions" class="icon-btn-sm" title="Refresh list"><i class="fa-solid fa-arrows-rotate"></i></button>
+        </div>
+
+        <div class="sessions-list" id="sessionsList">
+            <!-- Dynamic session items injected by JS -->
+            <div class="session-item active" data-id="">
+                <i class="fa-regular fa-message"></i>
+                <div class="session-info">
+                    <span class="session-title">Current Session</span>
+                    <span class="session-time">Just now</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="sessions-footer">
+            <button class="btn btn-outline-danger btn-block btn-sm" id="btnClearCurrentChat">
+                <i class="fa-solid fa-trash-can"></i> Clear Current Chat
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Chat Workspace -->
+    <section class="chat-workspace">
+        <!-- Top Chat Header Bar -->
+        <div class="chat-topbar">
+            <div class="chat-header-info">
+                <div class="chat-avatar-ai">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <div>
+                    <h3 class="chat-assistant-name">AgriVerse AI Agronomist</h3>
+                    <span class="chat-status-text">
+                        <span class="status-dot-sm"></span> Powered by Gemini &bull; Evidence-Aware Agronomy
+                    </span>
+                </div>
+            </div>
+
+            <div class="chat-topbar-controls">
+                <div class="chat-lang-toggle">
+                    <button class="lang-pill active" data-lang="en">English</button>
+                    <button class="lang-pill" data-lang="ta">தமிழ்</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Messages Feed -->
+        <div class="chat-feed" id="chatFeed">
+            <!-- Welcome Bot Message -->
+            <div class="chat-message bot-message" data-id="welcome">
+                <div class="message-avatar">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <div class="message-bubble">
+                    <div class="message-sender-name">AgriVerse AI Companion</div>
+                    <div class="message-body" id="welcomeMessageBody">
+                        <p><strong>Vanakkam & Welcome to AgriVerse AI! 🌾</strong></p>
+                        <p>I am your digital agronomist and farming assistant. I can help you with:</p>
+                        <ul>
+                            <li>Pest & disease diagnosis and organic remedies</li>
+                            <li>Soil report interpretation & fertilizer (NPK) guidance</li>
+                            <li>Crop scheduling, water requirements, and season planning</li>
+                            <li>Government subsidy & scheme information (PM-KISAN, PMFBY)</li>
+                        </ul>
+                        <p><em>Ask me anything in English or தமிழ்!</em></p>
+                    </div>
+                    <div class="message-tools">
+                        <span class="message-time">Just now</span>
+                        <button class="tool-btn copy-btn" title="Copy response"><i class="fa-regular fa-copy"></i></button>
+                        <button class="tool-btn speak-btn" title="Listen to response (TTS)"><i class="fa-solid fa-volume-high"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contextual Quick Action Chips -->
+        <div class="quick-chips-wrapper" id="quickChipsWrapper">
+            <div class="chips-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Suggested Topics:</div>
+            <div class="chips-container" id="chipsContainer">
+                <button class="quick-chip" data-prompt="How to identify and control Paddy stem borer organically?">
+                    🐛 Paddy stem borer control
+                </button>
+                <button class="quick-chip" data-prompt="What is the recommended fertilizer schedule for CO-51 paddy?">
+                    🌱 CO-51 fertilizer schedule
+                </button>
+                <button class="quick-chip" data-prompt="How to prepare organic Jeevamrutham bio-fertilizer at home?">
+                    🧪 Jeevamrutham preparation
+                </button>
+                <button class="quick-chip" data-prompt="பயிரில் மஞ்சள் இலை நோய் வந்தால் என்ன மருந்து தெளிக்க வேண்டும்?">
+                    🌾 பயிர் மஞ்சள் இலை நோய்
+                </button>
+            </div>
+        </div>
+
+        <!-- Input Bar with Voice & Send -->
+        <div class="chat-composer">
+            <form id="chatForm" class="composer-form">
+                <button type="button" class="btn-composer-icon" id="btnVoiceInput" title="Click to speak (Voice Input)">
+                    <i class="fa-solid fa-microphone"></i>
+                </button>
+                
+                <textarea 
+                    id="userQueryInput" 
+                    class="composer-textarea" 
+                    placeholder="Ask about crop health, pests, soil test, or irrigation... (or click microphone to speak)"
+                    rows="1"
+                    required
+                ></textarea>
+
+                <button type="submit" class="btn btn-primary btn-send" id="btnSend">
+                    <span>Send</span>
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+            <div class="composer-notice">
+                <i class="fa-solid fa-shield-halved"></i> Evidence-Aware Advice: Always cross-verify critical chemical dosages with your local Agricultural Extension Officer.
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

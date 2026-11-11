@@ -1,0 +1,21 @@
+# Core Backend Framework
+Flask>=3.0.0
+flask-cors>=4.0.0
+python-dotenv>=1.0.0
+Werkzeug>=3.0.0
+gunicorn>=21.2.0
+
+# Official Google GenAI SDK (Gemini 2.5/Flash/Pro & Embeddings)
+google-genai>=0.1.1
+
+# Document Processing & RAG Engine
+PyMuPDF>=1.23.0
+faiss-cpu>=1.7.4
+numpy>=1.24.0
+
+# Image & Multimodal Processing
+Pillow>=10.0.0
+
+# Testing & Quality
+pytest>=8.0.0
+pytest-mock>=3.12.0

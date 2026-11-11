@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}Settings & Configuration – AgriVerse AI{% endblock %}
+{% block page_title %}Settings{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-gear"></i> System Settings & Profile</h2>
+        <p class="section-subtitle">Manage farmer profile credentials, language preferences, AI engine parameters, and farm hardware telemetry settings.</p>
+    </div>
+
+    <div class="doctor-grid">
+        <!-- Farmer & Profile Settings -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-user-gear"></i> Farmer Profile</h3>
+                <span class="badge-status badge-verified">Configured</span>
+            </div>
+            <form id="settingsProfileForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Farmer Name</label>
+                        <input type="text" id="setFarmerName" class="form-control" value="Ramesh Kumar" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone / WhatsApp</label>
+                        <input type="text" id="setFarmerPhone" class="form-control" value="+91 98765 43210">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Location / District</label>
+                    <input type="text" id="setFarmerLocation" class="form-control" value="Coimbatore, Tamil Nadu" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Default Language</label>
+                        <select id="setDefaultLang" class="form-control">
+                            <option value="en" selected>English (EN)</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Primary Crop</label>
+                        <input type="text" id="setPrimaryCrop" class="form-control" value="Paddy / Rice" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top:10px;">
+                    <i class="fa-solid fa-save"></i> Save Profile Settings
+                </button>
+            </form>
+        </div>
+
+        <!-- System & AI Engine Status -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-microchip"></i> AI & Database Status</h3>
+                <span class="badge-status badge-verified">Active</span>
+            </div>
+            <div class="card-body">
+                <div class="profile-summary-list">
+                    <div class="summary-item">
+                        <span class="summary-label">Generative AI Engine:</span>
+                        <span class="summary-value" id="setGeminiModel">Google Gemini 3.5 Flash-Lite</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Vector Embeddings:</span>
+                        <span class="summary-value">gemini-embedding-001 (3072-D)</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Vector Store:</span>
+                        <span class="summary-value">FAISS CPU IndexFlatL2</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Relational Database:</span>
+                        <span class="summary-value">SQLite (agriverse.db)</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Security Protocol:</span>
+                        <span class="summary-value">Key In .env &bull; Parameterized Queries</span>
+                    </div>
+                </div>
+
+                <div class="card-alert alert-info" style="margin-top:16px;">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>All AI requests are routed through the backend. API keys are strictly secured on the server.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

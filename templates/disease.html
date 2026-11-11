@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Plant Doctor AI – Leaf Health & Disease Inspection{% endblock %}
+{% block page_title %}Plant Doctor AI{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-stethoscope"></i> Plant Doctor AI</h2>
+        <p class="section-subtitle">Multimodal foliar disease inspection powered by Google Gemini Vision. Upload or take a leaf photo for diagnostic insights.</p>
+    </div>
+
+    <div class="doctor-grid">
+        <!-- Upload & Input Card -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-camera"></i> Upload Crop Leaf Photograph</h3>
+                <span class="badge-status badge-verified">Multimodal AI</span>
+            </div>
+            <form id="leafUploadForm">
+                <div class="upload-dropzone" id="leafDropzone">
+                    <input type="file" id="leafFileInput" accept="image/png, image/jpeg, image/jpg, image/webp" style="display:none;">
+                    <div id="dropzonePrompt">
+                        <i class="fa-solid fa-cloud-arrow-up dropzone-icon"></i>
+                        <h4>Click or Drag & Drop Crop Leaf Photo</h4>
+                        <p class="text-muted">Supports JPG, PNG, WEBP (Max 16MB)</p>
+                    </div>
+                    <div id="imagePreviewContainer" style="display:none;">
+                        <img id="imagePreview" src="" alt="Uploaded Leaf Preview" class="leaf-preview-img">
+                        <button type="button" class="btn btn-sm btn-outline-danger" id="btnRemoveImage" style="margin-top:10px;">
+                            <i class="fa-solid fa-xmark"></i> Change Image
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:16px;">
+                    <label>Crop Name & Observed Symptoms (Optional)</label>
+                    <input type="text" id="cropNotes" class="form-control" placeholder="e.g. Paddy CO-51, brown spots on leaf tips, yellowing margin">
+                </div>
+
+                <div class="form-row" style="margin-top:14px;">
+                    <div class="form-group">
+                        <label>Preferred Language</label>
+                        <select id="doctorLanguage" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button type="submit" class="btn btn-primary btn-block" id="btnAnalyzeLeaf" disabled>
+                            <i class="fa-solid fa-magnifying-glass"></i> Analyze Foliar Health
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="card-alert alert-info" style="margin-top:16px;">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span><strong>Scientific Uncertainty Notice:</strong> Image analysis provides indicative symptoms and organic management advice, not a certified pathological test. Critical infestations should be inspected by an agronomic officer.</span>
+            </div>
+        </div>
+
+        <!-- Diagnostic Report Card -->
+        <div class="dashboard-card" id="analysisResultCard">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-file-medical"></i> Diagnostic Assessment</h3>
+                <span class="badge-status badge-verified" id="analysisStatusBadge">Awaiting Leaf Photo</span>
+            </div>
+            
+            <div class="card-body" id="analysisBody">
+                <div class="empty-state-box">
+                    <i class="fa-solid fa-leaf empty-icon"></i>
+                    <h4>No Leaf Analyzed Yet</h4>
+                    <p class="text-muted">Select or take a photograph of an affected crop leaf to receive an evidence-aware symptom report and organic treatment steps.</p>
+                </div>
+            </div>
+
+            <!-- Follow-up Question for Plant Doctor -->
+            <div class="card-footer" id="followUpSection" style="display:none; padding-top:16px; border-top:1px solid var(--border-color);">
+                <label style="font-size:0.82rem; font-weight:700;">Ask Follow-Up Question About This Plant:</label>
+                <div style="display:flex; gap:8px; margin-top:6px;">
+                    <input type="text" id="doctorFollowUpInput" class="form-control" placeholder="e.g. Can I use Pseudomonas fluorescens at this stage?">
+                    <button class="btn btn-primary" id="btnSendDoctorFollowUp"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

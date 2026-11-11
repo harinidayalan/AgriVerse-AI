@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AgriVerse AI – Intelligent Smart Farming Ecosystem{% endblock %}</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Noto+Sans+Tamil:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="theme-light">
+    <div class="app-container">
+        <!-- Sidebar Navigation (Single-Page App Tab Switcher) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-logo">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">AgriVerse<span class="accent-text">AI</span></span>
+                    <span class="brand-subtitle">Smart Farming</span>
+                </div>
+                <button class="sidebar-toggle-btn mobile-only" id="sidebarCloseBtn" aria-label="Close Sidebar">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-label">Core Intelligence</div>
+                <a href="#dashboard" class="nav-item active" data-view="dashboard">
+                    <i class="fa-solid fa-grip-vertical"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#chat" class="nav-item" data-view="chat">
+                    <i class="fa-solid fa-robot"></i>
+                    <span>Agri AI Chat</span>
+                </a>
+                <a href="#plant-doctor" class="nav-item" data-view="plant-doctor">
+                    <i class="fa-solid fa-stethoscope"></i>
+                    <span>Plant Doctor AI</span>
+                </a>
+                <a href="#soil-lab" class="nav-item" data-view="soil-lab">
+                    <i class="fa-solid fa-flask-vial"></i>
+                    <span>Soil Intelligence</span>
+                </a>
+                <a href="#crop-match" class="nav-item" data-view="crop-match">
+                    <i class="fa-solid fa-wheat-awn"></i>
+                    <span>CropMatch AI</span>
+                </a>
+
+                <div class="nav-section-label">Farm Operations</div>
+                <a href="#aquasmart" class="nav-item" data-view="aquasmart">
+                    <i class="fa-solid fa-droplet"></i>
+                    <span>AquaSmart</span>
+                </a>
+                <a href="#schemes" class="nav-item" data-view="schemes">
+                    <i class="fa-solid fa-file-shield"></i>
+                    <span>Scheme Navigator</span>
+                </a>
+                <a href="#market" class="nav-item" data-view="market">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>AgriMarket</span>
+                </a>
+                <a href="#farm-twin" class="nav-item" data-view="farm-twin">
+                    <i class="fa-solid fa-network-wired"></i>
+                    <span>Virtual Farm Twin</span>
+                </a>
+                <a href="#farm-twin" class="nav-item" data-view="farm-twin">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Farm Risk Radar</span>
+                </a>
+
+                <div class="nav-section-label">Planning & History</div>
+                <a href="#calendar" class="nav-item" data-view="calendar">
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <span>Farming Calendar</span>
+                </a>
+                <a href="#budget" class="nav-item" data-view="budget">
+                    <i class="fa-solid fa-wallet"></i>
+                    <span>Farm Budget</span>
+                </a>
+                <a href="#chat" class="nav-item" data-view="chat">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span>Chat History</span>
+                </a>
+                <a href="#settings" class="nav-item" data-view="settings">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="connection-status" id="apiStatusBadge">
+                    <span class="status-dot pulse-green"></span>
+                    <span class="status-text">Gemini 3.5 Active</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <div class="main-wrapper">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle-btn mobile-only" id="sidebarOpenBtn" aria-label="Open Sidebar">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div class="breadcrumb">
+                        <span class="breadcrumb-app">AgriVerse AI</span>
+                        <i class="fa-solid fa-chevron-right breadcrumb-separator"></i>
+                        <span class="breadcrumb-current" id="headerTitle">Dashboard</span>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <!-- Language Selector -->
+                    <div class="lang-selector-group">
+                        <i class="fa-solid fa-language"></i>
+                        <select id="languageSelect" class="lang-dropdown" aria-label="Language Selector">
+                            <option value="en" selected>English (EN)</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+
+                    <!-- Voice Assistant Shortcut -->
+                    <button class="header-icon-btn" id="headerVoiceToggle" title="Voice Assistant">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+
+                    <!-- User Profile Quick View -->
+                    <a href="#settings" class="user-profile-badge nav-item-profile" data-view="settings" style="text-decoration:none; cursor:pointer;">
+                        <div class="user-avatar">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name" id="navUserName">Ramesh Kumar</span>
+                            <span class="user-location" id="navUserLocation">Coimbatore, TN</span>
+                        </div>
+                    </a>
+                </div>
+            </header>
+
+            <!-- Page Content (Unified SPA Views) -->
+            <main class="content-area">
+                {% block content %}{% endblock %}
+            </main>
+
+            <!-- Global Footer -->
+            <footer class="main-footer">
+                <p>AgriVerse AI – Empowering Farmers Through Artificial Intelligence &bull; Single-Hub Smart Farming Ecosystem</p>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Core App Scripts -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

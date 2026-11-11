@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Soil Intelligence Lab – Soil Health Card Analyzer{% endblock %}
+{% block page_title %}Soil Intelligence Lab{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-flask-vial"></i> Soil Intelligence Lab</h2>
+        <p class="section-subtitle">Automated parameter extraction from official Soil Health Cards (PDF) or manual input. Evaluated against ICAR standards with Gemini fertilizer advice.</p>
+    </div>
+
+    <div class="doctor-grid">
+        <!-- Input Form (PDF or Manual) -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-file-pdf"></i> Soil Health Card Input</h3>
+                <div class="tab-pill-group">
+                    <button class="tab-pill active" id="tabUploadPdf">Upload PDF</button>
+                    <button class="tab-pill" id="tabManualInput">Manual Entry</button>
+                </div>
+            </div>
+
+            <!-- PDF Upload Tab -->
+            <form id="soilPdfForm">
+                <div class="upload-dropzone" id="soilDropzone">
+                    <input type="file" id="soilFileInput" accept="application/pdf" style="display:none;">
+                    <div id="soilDropzonePrompt">
+                        <i class="fa-solid fa-file-pdf dropzone-icon" style="color:#d32f2f;"></i>
+                        <h4>Click or Drag & Drop Soil Health Card (PDF)</h4>
+                        <p class="text-muted">Supports Government KVK & Lab Soil Reports (PDF)</p>
+                    </div>
+                    <div id="pdfSelectedInfo" style="display:none; text-align:center;">
+                        <i class="fa-solid fa-file-circle-check" style="font-size:2.5rem; color:var(--emerald-500);"></i>
+                        <h4 id="selectedPdfName" style="margin-top:8px;">document.pdf</h4>
+                        <button type="button" class="btn btn-sm btn-outline-danger" id="btnRemovePdf" style="margin-top:10px;">Change Document</button>
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top:16px;">
+                    <div class="form-group">
+                        <label>Target Crop for Recommendations</label>
+                        <input type="text" id="soilCropName" class="form-control" value="Paddy / Rice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="soilLanguage" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="btnAnalyzeSoilPdf" disabled style="margin-top:12px;">
+                    <i class="fa-solid fa-flask"></i> Extract & Analyze Soil Card
+                </button>
+            </form>
+
+            <!-- Manual Input Form (Initially Hidden) -->
+            <form id="soilManualForm" style="display:none; margin-top:16px;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Soil pH (1:2.5)</label>
+                        <input type="number" step="0.1" id="mPh" class="form-control" value="6.8" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Electrical Conductivity (dS/m)</label>
+                        <input type="number" step="0.01" id="mEc" class="form-control" value="0.45" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Organic Carbon (%)</label>
+                        <input type="number" step="0.01" id="mOc" class="form-control" value="0.58" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Available Nitrogen (kg/ha)</label>
+                        <input type="number" step="1" id="mN" class="form-control" value="240" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Available Phosphorus (kg/ha)</label>
+                        <input type="number" step="0.1" id="mP" class="form-control" value="18.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Available Potassium (kg/ha)</label>
+                        <input type="number" step="1" id="mK" class="form-control" value="210" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top:12px;">
+                    <i class="fa-solid fa-calculator"></i> Evaluate Parameters
+                </button>
+            </form>
+        </div>
+
+        <!-- Soil Analysis Results -->
+        <div class="dashboard-card" id="soilResultCard">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-chart-column"></i> Soil Health Report & Advice</h3>
+                <span class="badge-status badge-verified" id="soilStatusBadge">Ready</span>
+            </div>
+
+            <div class="card-body" id="soilReportOutput">
+                <!-- Metrics Grid -->
+                <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr); gap:12px; margin-bottom:20px;">
+                    <div class="metric-card" style="padding:12px;">
+                        <div>
+                            <span class="metric-label">Soil pH</span>
+                            <h3 class="metric-value" id="cardPhVal">6.8</h3>
+                            <span class="metric-subtext" id="cardPhStatus" style="color:var(--status-success);">Neutral (Optimal)</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" style="padding:12px;">
+                        <div>
+                            <span class="metric-label">Available N</span>
+                            <h3 class="metric-value" id="cardNVal">240 kg/ha</h3>
+                            <span class="metric-subtext" id="cardNStatus" style="color:var(--status-warning);">Low Deficiency</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" style="padding:12px;">
+                        <div>
+                            <span class="metric-label">Available P</span>
+                            <h3 class="metric-value" id="cardPVal">18.5 kg/ha</h3>
+                            <span class="metric-subtext" id="cardPStatus" style="color:var(--status-success);">Medium</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NPK Chart -->
+                <div style="background:white; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:16px; margin-bottom:20px;">
+                    <h4 style="font-size:0.88rem; font-weight:700; margin-bottom:10px;">Macronutrient Profile vs ICAR Baseline (kg/ha)</h4>
+                    <div style="height:200px;">
+                        <canvas id="soilNpkChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Gemini Advice -->
+                <div class="recommendation-content" id="soilRecommendationText">
+                    <p><strong>Baseline Fertility Advice:</strong> Incorporate 5 tonnes/acre of farmyard manure (FYM) to enhance soil organic carbon. Apply bio-fertilizers (Azospirillum and Phosphobacteria @ 2kg/acre each) blended with compost during basal application.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

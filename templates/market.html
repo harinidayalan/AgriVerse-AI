@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block title %}AgriMarket Intelligence – Mandi Prices & Trends{% endblock %}
+{% block page_title %}AgriMarket Intelligence{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> AgriMarket Intelligence</h2>
+        <p class="section-subtitle">Real-time commodity price tracking across APMC mandis with transparent source attribution and historical trend analysis.</p>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="dashboard-card" style="margin-bottom:24px;">
+        <div class="card-body" style="padding:16px;">
+            <div class="form-row" style="align-items:center;">
+                <div class="form-group" style="flex:2;">
+                    <div style="position:relative;">
+                        <input type="text" id="marketSearchInput" class="form-control" placeholder="Search commodity (e.g. Paddy, Turmeric, Tomato, Wheat, Cotton)..." style="padding-left:36px;">
+                        <i class="fa-solid fa-magnifying-glass" style="position:absolute; left:12px; top:12px; color:var(--text-muted);"></i>
+                    </div>
+                </div>
+                <div class="form-group" style="flex:1;">
+                    <select id="marketStateFilter" class="form-control">
+                        <option value="">All States</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Haryana">Haryana</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex:0.5;">
+                    <button class="btn btn-primary btn-block" id="btnFilterMarket">
+                        <i class="fa-solid fa-filter"></i> Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Two-Column Grid: Market Rates & Historical Trend Chart -->
+    <div class="dashboard-split-grid">
+        <!-- Mandi Price Cards Table -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-store"></i> Active Mandi Commodity Rates</h3>
+                <span class="badge-status badge-verified">Daily APMC Bulletin</span>
+            </div>
+            <div class="card-body" style="padding:0; overflow-x:auto;">
+                <table class="agri-table" id="marketTable">
+                    <thead>
+                        <tr>
+                            <th>Commodity</th>
+                            <th>Mandi / Location</th>
+                            <th>Modal Price</th>
+                            <th>Price Range</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marketTableBody">
+                        <!-- Loaded dynamically via JS -->
+                        <tr>
+                            <td colspan="5" style="text-align:center; padding:20px; color:var(--text-muted);">
+                                <i class="fa-solid fa-spinner fa-spin"></i> Loading APMC rates...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 6-Month Historical Price Chart -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-chart-area"></i> 6-Month Price Trend</h3>
+                <span class="badge-status badge-verified" id="chartCommodityLabel">Paddy (Common)</span>
+            </div>
+            <div class="card-body">
+                <div style="height:260px;">
+                    <canvas id="marketTrendChart"></canvas>
+                </div>
+                <div class="card-alert alert-info" style="margin-top:16px;">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <span><strong>Mandi Advisory:</strong> Modal price for Paddy has shown steady upward momentum (+7.9% over 6 months). Ideal selling window occurs within 2 weeks post harvest.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

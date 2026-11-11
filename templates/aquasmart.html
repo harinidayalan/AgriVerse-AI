@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}AquaSmart – Smart Irrigation & Water Management Advisor{% endblock %}
+{% block page_title %}AquaSmart Irrigation{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-droplet"></i> AquaSmart – Smart Irrigation Advisor</h2>
+        <p class="section-subtitle">Calculate crop stage-specific water requirements, optimize drip running schedules, and protect yields against critical water stress.</p>
+    </div>
+
+    <div class="doctor-grid">
+        <!-- Input Form -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-faucet-drip"></i> Irrigation Parameters</h3>
+                <span class="badge-status badge-verified">Water Optimization</span>
+            </div>
+            <form id="aquaSmartForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Select Crop</label>
+                        <select id="aquaCrop" class="form-control" required>
+                            <option value="Paddy / Rice" selected>Paddy / Rice</option>
+                            <option value="Sugarcane">Sugarcane</option>
+                            <option value="Cotton">Cotton</option>
+                            <option value="Maize">Maize</option>
+                            <option value="Tomato">Tomato</option>
+                            <option value="Banana">Banana</option>
+                            <option value="Turmeric">Turmeric</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Current Growth Stage</label>
+                        <select id="aquaStage" class="form-control" required>
+                            <option value="Germination / Nursery">Germination / Nursery</option>
+                            <option value="Vegetative Stage" selected>Vegetative Stage</option>
+                            <option value="Tillering / Branching">Tillering / Branching</option>
+                            <option value="Panicle Initiation / Flowering">Panicle Initiation / Flowering (Critical)</option>
+                            <option value="Fruit / Grain Development">Fruit / Grain Development</option>
+                            <option value="Maturity / Pre-harvest">Maturity / Pre-harvest</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Soil Type</label>
+                        <select id="aquaSoil" class="form-control" required>
+                            <option value="Red Loamy Soil" selected>Red Loamy Soil</option>
+                            <option value="Black Cotton Soil">Black Cotton Soil (High Retention)</option>
+                            <option value="Sandy Loam">Sandy Loam (Rapid Drainage)</option>
+                            <option value="Clayey Loam">Clayey Loam</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Irrigation Architecture</label>
+                        <select id="aquaSystem" class="form-control" required>
+                            <option value="Drip Irrigation (In-line emit)" selected>Drip Irrigation (In-line emit)</option>
+                            <option value="Micro-Sprinkler">Micro-Sprinkler</option>
+                            <option value="Furrow / Basin Irrigation">Furrow / Basin Irrigation</option>
+                            <option value="Shallow Standing Water (Flood)">Shallow Standing Water (Flood)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top:10px;">
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="aquaLang" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button type="submit" class="btn btn-primary btn-block" id="btnGetIrrigationAdvice">
+                            <i class="fa-solid fa-calculator"></i> Calculate Water Guidance
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="card-alert alert-info" style="margin-top:16px;">
+                <i class="fa-solid fa-droplet-slash"></i>
+                <span>AquaSmart uses agronomic evapotranspiration baselines. Connect actual soil tensiometers or weather stations in Settings for telemetry.</span>
+            </div>
+        </div>
+
+        <!-- Irrigation Advice Output -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-chart-pie"></i> Water Management Protocol</h3>
+                <span class="badge-status badge-verified" id="aquaStatusBadge">Ready</span>
+            </div>
+            <div class="card-body" id="aquaResultBody">
+                <div class="empty-state-box">
+                    <i class="fa-solid fa-faucet empty-icon"></i>
+                    <h4>Ready to Advise</h4>
+                    <p class="text-muted">Choose your crop and growth stage to generate tailored water schedule and conservation tips.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# Environment variables & secrets
+.env
+
+# SQLite databases
+*.db
+*.sqlite3
+database/*.db
+
+# Uploaded documents and images
+uploads/*
+!uploads/.gitkeep
+
+# FAISS Vector store indexes
+vector_store/*
+!vector_store/.gitkeep
+
+# Unit test / coverage reports
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE & OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db

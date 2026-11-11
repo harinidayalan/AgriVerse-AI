@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}Virtual Farm Twin & Farm Risk Radar – AgriVerse AI{% endblock %}
+{% block page_title %}Virtual Farm Twin & Risk Radar{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-network-wired"></i> Virtual Farm Twin & Risk Radar</h2>
+        <p class="section-subtitle">Simulate agronomic shifts, hypothetical weather anomalies, and evaluate farm vulnerability before making field investments.</p>
+    </div>
+
+    <!-- Farm Twin Status Banner -->
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-icon-box bg-forest"><i class="fa-solid fa-seedling"></i></div>
+            <div class="metric-data">
+                <span class="metric-label">Simulated Crop</span>
+                <h3 class="metric-value" id="twinCrop">Paddy / Rice</h3>
+                <span class="metric-subtext">CO-51 Variety</span>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon-box bg-emerald"><i class="fa-solid fa-earth-americas"></i></div>
+            <div class="metric-data">
+                <span class="metric-label">Soil & Landholding</span>
+                <h3 class="metric-value" id="twinSize">4.5 Acres</h3>
+                <span class="metric-subtext" id="twinSoil">Red Loamy Soil</span>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon-box bg-teal"><i class="fa-solid fa-faucet-drip"></i></div>
+            <div class="metric-data">
+                <span class="metric-label">Water Architecture</span>
+                <h3 class="metric-value" id="twinIrrigation">Drip System</h3>
+                <span class="metric-subtext">Borewell & Canal</span>
+            </div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon-box bg-amber"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="metric-data">
+                <span class="metric-label">Overall Risk Status</span>
+                <h3 class="metric-value" style="color:var(--status-warning);">Moderate</h3>
+                <span class="metric-subtext">Watch Water Table</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Split Grid: Scenario Simulator & Farm Risk Radar -->
+    <div class="dashboard-split-grid">
+        <!-- Scenario Simulator -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-flask"></i> Hypothetical Scenario Simulator</h3>
+                <span class="badge-status badge-verified">Simulation Engine</span>
+            </div>
+            <form id="twinSimulatorForm">
+                <div class="form-group">
+                    <label>Describe a Hypothetical Agronomic Scenario to Simulate:</label>
+                    <textarea id="scenarioInput" class="form-control" rows="3" placeholder="e.g. What if monsoon rains are delayed by 4 weeks and temperature rises by 3 degrees Celsius during flowering?" required></textarea>
+                </div>
+                
+                <div style="margin:10px 0;">
+                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Quick Scenarios:</span>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">
+                        <button type="button" class="quick-chip" data-scenario="What happens if monsoon is delayed by 3 weeks during transplanting?">
+                            🌧️ 3-week delayed monsoon
+                        </button>
+                        <button type="button" class="quick-chip" data-scenario="What if daytime temperature exceeds 38°C during panicle initiation?">
+                            🔥 Heatwave during flowering
+                        </button>
+                        <button type="button" class="quick-chip" data-scenario="What if I switch completely from canal flood to drip fertigation?">
+                            💧 Switch to Drip Fertigation
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-row" style="margin-top:14px;">
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="simLanguage" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button type="submit" class="btn btn-primary btn-block" id="btnRunSimulation">
+                            <i class="fa-solid fa-play"></i> Run Simulation
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="simulation-output-box" id="simulationOutputBox" style="margin-top:16px; display:none; padding:16px; background:#fafdfb; border:1px solid var(--border-color); border-radius:var(--radius-md);">
+                <h4 style="font-size:0.92rem; font-weight:700; color:var(--forest-900); margin-bottom:8px;"><i class="fa-solid fa-chart-line"></i> Simulation Agronomic Analysis:</h4>
+                <div id="simulationResultText" style="font-size:0.88rem; line-height:1.6;"></div>
+            </div>
+        </div>
+
+        <!-- Farm Risk Radar -->
+        <div class="dashboard-card" id="risk-radar">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-shield-halved"></i> Farm Risk Radar</h3>
+                <span class="badge-status badge-verified">Risk Assessment</span>
+            </div>
+            <div class="card-body">
+                <div class="risk-meter-list">
+                    <!-- 1. Water Stress -->
+                    <div class="risk-item">
+                        <div class="risk-header">
+                            <span class="risk-title"><i class="fa-solid fa-droplet-slash"></i> Water & Drought Stress</span>
+                            <span class="risk-score" style="color:var(--status-warning);">Moderate (42%)</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: 42%; background: #f59e0b;"></div>
+                        </div>
+                        <span class="risk-note">Borewell yields steady; schedule early morning drip runs.</span>
+                    </div>
+
+                    <!-- 2. Thermal Stress -->
+                    <div class="risk-item" style="margin-top:16px;">
+                        <div class="risk-header">
+                            <span class="risk-title"><i class="fa-solid fa-temperature-arrow-up"></i> Heatwave / Foliar Burn Hazard</span>
+                            <span class="risk-score" style="color:var(--status-success);">Low (18%)</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: 18%; background: #10b981;"></div>
+                        </div>
+                        <span class="risk-note">Current temperatures favorable for vegetative tillering.</span>
+                    </div>
+
+                    <!-- 3. Pest Outbreak Risk -->
+                    <div class="risk-item" style="margin-top:16px;">
+                        <div class="risk-header">
+                            <span class="risk-title"><i class="fa-solid fa-bug"></i> Yellow Stem Borer & Leaf Folder Vulnerability</span>
+                            <span class="risk-score" style="color:var(--status-danger);">Elevated (68%)</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: 68%; background: #ef4444;"></div>
+                        </div>
+                        <span class="risk-note">High relative humidity (>80%) favors stem borer egg hatching. Install pheromone traps.</span>
+                    </div>
+
+                    <!-- 4. Nutrient Leaching Risk -->
+                    <div class="risk-item" style="margin-top:16px;">
+                        <div class="risk-header">
+                            <span class="risk-title"><i class="fa-solid fa-flask"></i> Nitrogen Leaching & Runoff</span>
+                            <span class="risk-score" style="color:var(--status-warning);">Medium (35%)</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" style="width: 35%; background: #f59e0b;"></div>
+                        </div>
+                        <span class="risk-note">Use split urea applications blended with neem cake to prevent volatilization.</span>
+                    </div>
+                </div>
+
+                <div class="card-alert alert-info" style="margin-top:20px;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span><strong>Radar Notice:</strong> Risk indicators reflect agronomic models and farm conditions. Sensor hardware can be paired in Settings.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

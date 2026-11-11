@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Smart Farming Calendar – Activity Timelines & Reminders{% endblock %}
+{% block page_title %}Farming Calendar{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-regular fa-calendar-days"></i> Smart Farming Calendar</h2>
+        <p class="section-subtitle">Track crop growth stages, schedule critical agronomic activities, set reminders, and log field operations.</p>
+    </div>
+
+    <div class="doctor-grid">
+        <!-- Add Activity Form -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-calendar-plus"></i> Schedule New Activity</h3>
+                <span class="badge-status badge-verified">Activity Scheduler</span>
+            </div>
+            <form id="calendarAddForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Crop Name</label>
+                        <input type="text" id="calCrop" class="form-control" value="Paddy / Rice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Activity Name</label>
+                        <input type="text" id="calActivity" class="form-control" placeholder="e.g. Second Foliar Spray of Micronutrients" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Crop Growth Stage</label>
+                        <select id="calStage" class="form-control" required>
+                            <option value="Land Preparation">Land Preparation</option>
+                            <option value="Sowing / Nursery">Sowing / Nursery</option>
+                            <option value="Transplanting">Transplanting</option>
+                            <option value="Vegetative Stage" selected>Vegetative Stage</option>
+                            <option value="Tillering Stage">Tillering Stage</option>
+                            <option value="Panicle Initiation">Panicle Initiation</option>
+                            <option value="Flowering Stage">Flowering Stage</option>
+                            <option value="Grain Filling / Milking">Grain Filling / Milking</option>
+                            <option value="Harvesting">Harvesting</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Scheduled Execution Date</label>
+                        <input type="date" id="calDate" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Agronomic Instructions / Notes</label>
+                    <textarea id="calNotes" class="form-control" rows="2" placeholder="e.g. Spray 2ml Pseudomonas fluorescens per liter of water in late evening"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top:10px;">
+                    <i class="fa-solid fa-plus"></i> Add to Farming Schedule
+                </button>
+            </form>
+
+            <div class="card-alert alert-info" style="margin-top:16px;">
+                <i class="fa-solid fa-clock"></i>
+                <span>General schedules provide baseline timing. Local weather fluctuations should guide exact spraying and irrigation dates.</span>
+            </div>
+        </div>
+
+        <!-- Scheduled Activities Table -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-list-check"></i> Field Activity Schedule</h3>
+                <span class="badge-status badge-verified" id="activityCountBadge">Loading...</span>
+            </div>
+            <div class="card-body" style="padding:0; overflow-x:auto;">
+                <table class="agri-table" id="calendarTable">
+                    <thead>
+                        <tr>
+                            <th>Crop & Stage</th>
+                            <th>Activity</th>
+                            <th>Scheduled Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="calendarTableBody">
+                        <tr>
+                            <td colspan="5" style="text-align:center; padding:20px; color:var(--text-muted);">
+                                <i class="fa-solid fa-spinner fa-spin"></i> Loading calendar activities...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

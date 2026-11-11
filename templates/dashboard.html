@@ -1,0 +1,1281 @@
+{% extends "base.html" %}
+
+{% block title %}AgriVerse AI – Next-Generation Smart Agriculture Ecosystem{% endblock %}
+
+{% block content %}
+<script>
+    window.SERVER_INITIAL_VIEW = "{{ initial_view|default('dashboard') }}";
+</script>
+
+<!-- =========================================================================
+     VIEW 1: UNIFIED MAIN DASHBOARD
+     ========================================================================= -->
+<div id="view-dashboard" class="app-view active">
+    <!-- Welcome Banner -->
+    <section class="welcome-banner">
+        <div class="banner-content">
+            <span class="banner-badge"><i class="fa-solid fa-leaf"></i> Next-Gen Agritech</span>
+            <h1 class="banner-title">Welcome to AgriVerse AI – Your Intelligent Farming Companion.</h1>
+            <p class="banner-tagline">"Empowering Farmers Through Artificial Intelligence."</p>
+            <p class="banner-desc">Evidence-aware agricultural guidance powered by Google Gemini, multimodal disease recognition, soil lab intelligence, and hyper-local crop optimization — all in one centralized hub.</p>
+            <div class="banner-actions">
+                <button class="btn btn-primary btn-view-switch" data-target="chat">
+                    <i class="fa-solid fa-comments"></i> Consult Agri AI
+                </button>
+                <button class="btn btn-outline-white btn-view-switch" data-target="plant-doctor">
+                    <i class="fa-solid fa-camera"></i> Scan Plant Health
+                </button>
+                <button class="btn btn-outline-white btn-view-switch" data-target="soil-lab">
+                    <i class="fa-solid fa-file-pdf"></i> Upload Soil Report
+                </button>
+            </div>
+        </div>
+        <div class="banner-graphic">
+            <div class="pulse-circle"></div>
+            <i class="fa-solid fa-tractor tractor-hero-icon"></i>
+        </div>
+    </section>
+
+    <!-- Key Agriculture Metrics -->
+    <section class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-icon-box bg-emerald">
+                <i class="fa-solid fa-map-location-dot"></i>
+            </div>
+            <div class="metric-data">
+                <span class="metric-label">Active Farm Size</span>
+                <h3 class="metric-value" id="statFarmSize">4.5 Acres</h3>
+                <span class="metric-subtext" id="statFarmLocation"><i class="fa-solid fa-location-dot"></i> Coimbatore, TN</span>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-icon-box bg-forest">
+                <i class="fa-solid fa-wheat-awn"></i>
+            </div>
+            <div class="metric-data">
+                <span class="metric-label">Primary Crop</span>
+                <h3 class="metric-value" id="statPrimaryCrop">Paddy / Rice</h3>
+                <span class="metric-subtext" id="statCropVariety">Active Cultivation</span>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-icon-box bg-teal">
+                <i class="fa-solid fa-calendar-check"></i>
+            </div>
+            <div class="metric-data">
+                <span class="metric-label">Upcoming Activity</span>
+                <h3 class="metric-value" id="statNextActivity">Fertilizer App</h3>
+                <span class="metric-subtext" id="statNextActivityStage"><i class="fa-solid fa-clock"></i> Next in queue</span>
+            </div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-icon-box bg-amber">
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+            </div>
+            <div class="metric-data">
+                <span class="metric-label">Recorded Expenses</span>
+                <h3 class="metric-value" id="statExpenses">₹26,700</h3>
+                <span class="metric-subtext"><button class="btn-text-link btn-view-switch" data-target="budget">View Farm Budget &rarr;</button></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Agriculture Service Cards Grid -->
+    <section class="services-section">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Intelligent Farming Modules</h2>
+                <p class="section-subtitle">Select an AI-powered service designed to maximize crop yield and sustainability.</p>
+            </div>
+        </div>
+
+        <div class="services-grid">
+            <!-- 1. Agri AI Chatbot -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-icon"><i class="fa-solid fa-robot"></i></div>
+                    <span class="service-tag tag-gemini">Gemini 3.5</span>
+                </div>
+                <h3 class="service-card-title">Agri AI Chat</h3>
+                <p class="service-card-desc">Bilingual (English & Tamil) conversational advisor for crop management, pest control, and agronomy queries.</p>
+                <div class="service-card-footer">
+                    <button class="service-link btn-view-switch" data-target="chat">Launch Chat <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- 2. Plant Doctor AI -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-icon"><i class="fa-solid fa-stethoscope"></i></div>
+                    <span class="service-tag tag-vision">Multimodal Vision</span>
+                </div>
+                <h3 class="service-card-title">Plant Doctor AI</h3>
+                <p class="service-card-desc">Leaf symptom inspection and disease awareness with organic treatment options and expert escalation advice.</p>
+                <div class="service-card-footer">
+                    <button class="service-link btn-view-switch" data-target="plant-doctor">Inspect Leaf <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- 3. Soil Intelligence Lab -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-icon"><i class="fa-solid fa-flask-vial"></i></div>
+                    <span class="service-tag tag-rag">Doc Intelligence</span>
+                </div>
+                <h3 class="service-card-title">Soil Intelligence</h3>
+                <p class="service-card-desc">Upload Soil Health Cards (PDF) to extract pH, NPK, organic carbon, and receive tailored fertilizer amendments.</p>
+                <div class="service-card-footer">
+                    <button class="service-link btn-view-switch" data-target="soil-lab">Analyze Soil <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- 4. CropMatch AI -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-icon"><i class="fa-solid fa-seedling"></i></div>
+                    <span class="service-tag tag-ai">Match Engine</span>
+                </div>
+                <h3 class="service-card-title">CropMatch AI</h3>
+                <p class="service-card-desc">Evidence-based crop recommendations balancing soil type, climate, water availability, and seasonal demand.</p>
+                <div class="service-card-footer">
+                    <button class="service-link btn-view-switch" data-target="crop-match">Find Crops <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- 5. AquaSmart Irrigation -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-icon"><i class="fa-solid fa-droplet"></i></div>
+                    <span class="service-tag tag-water">Smart Water</span>
+                </div>
+                <h3 class="service-card-title">AquaSmart Irrigation</h3>
+                <p class="service-card-desc">Water conservation guidance, drip irrigation scheduling, and stage-specific crop water requirements.</p>
+                <div class="service-card-footer">
+                    <button class="service-link btn-view-switch" data-target="aquasmart">View Guidance <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- 6. Scheme Navigator -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-icon"><i class="fa-solid fa-file-shield"></i></div>
+                    <span class="service-tag tag-rag">FAISS RAG</span>
+                </div>
+                <h3 class="service-card-title">Scheme Navigator</h3>
+                <p class="service-card-desc">RAG-grounded agricultural subsidy and government scheme assistance with exact document page citations.</p>
+                <div class="service-card-footer">
+                    <button class="service-link btn-view-switch" data-target="schemes">Explore Schemes <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- 7. AgriMarket Intelligence -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <span class="service-tag tag-market">Market Data</span>
+                </div>
+                <h3 class="service-card-title">AgriMarket Intelligence</h3>
+                <p class="service-card-desc">Real-time mandi price trends, historical pricing charts, and inter-mandi price comparisons for optimal sales.</p>
+                <div class="service-card-footer">
+                    <button class="service-link btn-view-switch" data-target="market">Check Mandi Prices <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <!-- 8. Virtual Farm Twin -->
+            <div class="service-card">
+                <div class="service-card-header">
+                    <div class="service-icon"><i class="fa-solid fa-network-wired"></i></div>
+                    <span class="service-tag tag-twin">Digital Twin</span>
+                </div>
+                <h3 class="service-card-title">Virtual Farm Twin</h3>
+                <p class="service-card-desc">Simulate agronomic shifts, soil condition variations, and irrigation adaptations for your farm profile.</p>
+                <div class="service-card-footer">
+                    <button class="service-link btn-view-switch" data-target="farm-twin">Open Twin <i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Two-Column Section: Farm Twin Snapshot & Upcoming Schedule -->
+    <div class="dashboard-split-grid">
+        <!-- Farm Profile Card -->
+        <div class="dashboard-card" id="farm-twin-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-tractor"></i> Virtual Farm Twin Snapshot</h3>
+                <button class="btn btn-sm btn-outline-white" style="color:var(--forest-800); border-color:var(--border-color);" id="btnOpenEditProfileModal">
+                    <i class="fa-solid fa-pen-to-square"></i> Edit Profile
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="profile-summary-list">
+                    <div class="summary-item">
+                        <span class="summary-label">Farm Name:</span>
+                        <span class="summary-value" id="profileFarmName">Green Valley Farm</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Location:</span>
+                        <span class="summary-value" id="profileLocation">Coimbatore, Tamil Nadu</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Farm Size:</span>
+                        <span class="summary-value" id="profileSize">4.5 Acres</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Soil Classification:</span>
+                        <span class="summary-value" id="profileSoil">Red Loamy Soil (pH ~6.5)</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Irrigation Architecture:</span>
+                        <span class="summary-value" id="profileIrrigation">Drip System & Borewell</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Water Availability:</span>
+                        <span class="summary-value" id="profileWater">Moderate (Good Groundwater)</span>
+                    </div>
+                </div>
+                <div class="card-alert alert-info">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>Digital Twin simulates hypothetical scenarios. <button class="btn-text-link btn-view-switch" data-target="farm-twin" style="color:inherit; font-weight:700;">Simulate Scenarios &rarr;</button></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Farming Calendar Schedule -->
+        <div class="dashboard-card" id="calendar-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-regular fa-calendar-check"></i> Farming Activity Schedule</h3>
+                <button class="btn btn-sm btn-primary" id="btnOpenAddActivityModal">
+                    <i class="fa-solid fa-plus"></i> Add Activity
+                </button>
+            </div>
+            <div class="card-body">
+                <div class="activity-timeline" id="dashboardActivitiesList">
+                    <div style="text-align:center; padding:20px; color:var(--text-muted);">
+                        <i class="fa-solid fa-spinner fa-spin"></i> Loading scheduled activities...
+                    </div>
+                </div>
+                <div style="text-align:right; margin-top:14px;">
+                    <button class="card-action-btn btn-view-switch" data-target="calendar">View Full Calendar & Activities &rarr;</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     VIEW 2: AGRI AI CHATBOT
+     ========================================================================= -->
+<div id="view-chat" class="app-view">
+    <div class="chat-layout">
+        <!-- Sessions Sidebar -->
+        <aside class="chat-sessions-sidebar">
+            <button class="btn btn-primary btn-block" id="btnNewChat">
+                <i class="fa-solid fa-plus"></i> New Consultation
+            </button>
+            <div class="sessions-header">
+                <span>Recent Conversations</span>
+                <button id="btnRefreshSessions" class="icon-btn-sm" title="Refresh list"><i class="fa-solid fa-arrows-rotate"></i></button>
+            </div>
+            <div class="sessions-list" id="sessionsList">
+                <div class="session-item active">
+                    <i class="fa-regular fa-message"></i>
+                    <div class="session-info">
+                        <span class="session-title">Current Session</span>
+                        <span class="session-time">Just now</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sessions-footer">
+                <button class="btn btn-outline-danger btn-block btn-sm" id="btnClearCurrentChat">
+                    <i class="fa-solid fa-trash-can"></i> Clear Current Chat
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <section class="chat-workspace">
+            <div class="chat-topbar">
+                <div class="chat-header-info">
+                    <div class="chat-avatar-ai"><i class="fa-solid fa-robot"></i></div>
+                    <div>
+                        <h3 class="chat-assistant-name">AgriVerse AI Agronomist</h3>
+                        <span class="chat-status-text"><span class="status-dot-sm"></span> Powered by Gemini &bull; Evidence-Aware</span>
+                    </div>
+                </div>
+                <div class="chat-topbar-controls">
+                    <div class="chat-lang-toggle">
+                        <button class="lang-pill active" data-lang="en">English</button>
+                        <button class="lang-pill" data-lang="ta">தமிழ்</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chat-feed" id="chatFeed">
+                <div class="chat-message bot-message" data-id="welcome">
+                    <div class="message-avatar"><i class="fa-solid fa-seedling"></i></div>
+                    <div class="message-bubble">
+                        <div class="message-sender-name">AgriVerse AI Companion</div>
+                        <div class="message-body">
+                            <p><strong>Vanakkam & Welcome to AgriVerse AI! 🌾</strong></p>
+                            <p>I am your digital agronomist and farming assistant. I can help you with:</p>
+                            <ul>
+                                <li>Pest & disease diagnosis and organic remedies</li>
+                                <li>Soil report interpretation & fertilizer (NPK) guidance</li>
+                                <li>Crop scheduling, water requirements, and season planning</li>
+                                <li>Government subsidy & scheme information (PM-KISAN, PMFBY)</li>
+                            </ul>
+                            <p><em>Ask me anything in English or தமிழ்!</em></p>
+                        </div>
+                        <div class="message-tools">
+                            <span class="message-time">Just now</span>
+                            <button class="tool-btn copy-btn" title="Copy response"><i class="fa-regular fa-copy"></i></button>
+                            <button class="tool-btn speak-btn" title="Listen to response (TTS)"><i class="fa-solid fa-volume-high"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Chips -->
+            <div class="quick-chips-wrapper" id="quickChipsWrapper">
+                <div class="chips-label"><i class="fa-solid fa-wand-magic-sparkles"></i> Suggested Topics:</div>
+                <div class="chips-container" id="chipsContainer">
+                    <button class="quick-chip" data-prompt="How to identify and control Paddy stem borer organically?">🐛 Paddy stem borer control</button>
+                    <button class="quick-chip" data-prompt="What is the recommended fertilizer schedule for CO-51 paddy?">🌱 CO-51 fertilizer schedule</button>
+                    <button class="quick-chip" data-prompt="How to prepare organic Jeevamrutham bio-fertilizer at home?">🧪 Jeevamrutham preparation</button>
+                    <button class="quick-chip" data-prompt="பயிரில் மஞ்சள் இலை நோய் வந்தால் என்ன மருந்து தெளிக்க வேண்டும்?">🌾 பயிர் மஞ்சள் இலை நோய்</button>
+                </div>
+            </div>
+
+            <!-- Composer -->
+            <div class="chat-composer">
+                <form id="chatForm" class="composer-form">
+                    <button type="button" class="btn-composer-icon" id="btnVoiceInput" title="Click to speak (Voice Input)">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+                    <textarea id="userQueryInput" class="composer-textarea" placeholder="Ask about crop health, pests, soil test, or irrigation... (or click microphone to speak)" rows="1" required></textarea>
+                    <button type="submit" class="btn btn-primary btn-send" id="btnSend"><span>Send</span> <i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+                <div class="composer-notice">
+                    <i class="fa-solid fa-shield-halved"></i> Evidence-Aware Advice: Always cross-verify critical chemical dosages with your local Agricultural Extension Officer.
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<!-- =========================================================================
+     VIEW 3: PLANT DOCTOR AI
+     ========================================================================= -->
+<div id="view-plant-doctor" class="app-view">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-stethoscope"></i> Plant Doctor AI</h2>
+        <p class="section-subtitle">Multimodal foliar disease inspection powered by Google Gemini Vision. Upload or drag a leaf photo for immediate diagnostic insights.</p>
+    </div>
+    <div class="doctor-grid">
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-camera"></i> Upload Crop Leaf Photograph</h3>
+                <span class="badge-status badge-verified">Multimodal AI</span>
+            </div>
+            <form id="leafUploadForm">
+                <div class="upload-dropzone" id="leafDropzone">
+                    <input type="file" id="leafFileInput" accept="image/png, image/jpeg, image/jpg, image/webp" style="display:none;">
+                    <div id="dropzonePrompt">
+                        <i class="fa-solid fa-cloud-arrow-up dropzone-icon"></i>
+                        <h4>Click or Drag & Drop Crop Leaf Photo</h4>
+                        <p class="text-muted">Supports JPG, PNG, WEBP (Max 16MB)</p>
+                    </div>
+                    <div id="imagePreviewContainer" style="display:none;">
+                        <img id="imagePreview" src="" alt="Uploaded Leaf Preview" class="leaf-preview-img">
+                        <button type="button" class="btn btn-sm btn-outline-danger" id="btnRemoveImage" style="margin-top:10px;">
+                            <i class="fa-solid fa-xmark"></i> Change Image
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top:16px;">
+                    <label>Crop Name & Observed Symptoms (Optional)</label>
+                    <input type="text" id="cropNotes" class="form-control" placeholder="e.g. Paddy CO-51, brown spots on leaf tips, yellowing margin">
+                </div>
+
+                <div class="form-row" style="margin-top:14px;">
+                    <div class="form-group">
+                        <label>Preferred Language</label>
+                        <select id="doctorLanguage" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button type="submit" class="btn btn-primary btn-block" id="btnAnalyzeLeaf" disabled>
+                            <i class="fa-solid fa-magnifying-glass"></i> Analyze Foliar Health
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div class="card-alert alert-info" style="margin-top:16px;">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span><strong>Scientific Uncertainty Notice:</strong> Image analysis provides indicative symptoms and organic management advice, not a certified pathological test. Critical infestations should be inspected by an agronomic officer.</span>
+            </div>
+        </div>
+
+        <div class="dashboard-card" id="analysisResultCard">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-file-medical"></i> Diagnostic Assessment</h3>
+                <span class="badge-status badge-verified" id="analysisStatusBadge">Awaiting Leaf Photo</span>
+            </div>
+            <div class="card-body" id="analysisBody">
+                <div class="empty-state-box">
+                    <i class="fa-solid fa-leaf empty-icon"></i>
+                    <h4>No Leaf Analyzed Yet</h4>
+                    <p class="text-muted">Select or take a photograph of an affected crop leaf to receive an evidence-aware symptom report and organic treatment steps.</p>
+                </div>
+            </div>
+            <div class="card-footer" id="followUpSection" style="display:none; padding-top:16px; border-top:1px solid var(--border-color);">
+                <label style="font-size:0.82rem; font-weight:700;">Ask Follow-Up Question About This Plant:</label>
+                <div style="display:flex; gap:8px; margin-top:6px;">
+                    <input type="text" id="doctorFollowUpInput" class="form-control" placeholder="e.g. Can I use Pseudomonas fluorescens at this stage?">
+                    <button class="btn btn-primary" id="btnSendDoctorFollowUp"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     VIEW 4: SOIL INTELLIGENCE LAB
+     ========================================================================= -->
+<div id="view-soil-lab" class="app-view">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-flask-vial"></i> Soil Intelligence Lab</h2>
+        <p class="section-subtitle">Automated parameter extraction from official Soil Health Cards (PDF) or manual input. Evaluated against ICAR standards with Gemini fertilizer advice.</p>
+    </div>
+    <div class="doctor-grid">
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-file-pdf"></i> Soil Health Card Input</h3>
+                <div class="tab-pill-group">
+                    <button class="tab-pill active" id="tabUploadPdf">Upload PDF</button>
+                    <button class="tab-pill" id="tabManualInput">Manual Entry</button>
+                </div>
+            </div>
+            <form id="soilPdfForm">
+                <div class="upload-dropzone" id="soilDropzone">
+                    <input type="file" id="soilFileInput" accept="application/pdf" style="display:none;">
+                    <div id="soilDropzonePrompt">
+                        <i class="fa-solid fa-file-pdf dropzone-icon" style="color:#d32f2f;"></i>
+                        <h4>Click or Drag & Drop Soil Health Card (PDF)</h4>
+                        <p class="text-muted">Supports Government KVK & Lab Soil Reports (PDF)</p>
+                    </div>
+                    <div id="pdfSelectedInfo" style="display:none; text-align:center;">
+                        <i class="fa-solid fa-file-circle-check" style="font-size:2.5rem; color:var(--emerald-500);"></i>
+                        <h4 id="selectedPdfName" style="margin-top:8px;">document.pdf</h4>
+                        <button type="button" class="btn btn-sm btn-outline-danger" id="btnRemovePdf" style="margin-top:10px;">Change Document</button>
+                    </div>
+                </div>
+                <div class="form-row" style="margin-top:16px;">
+                    <div class="form-group">
+                        <label>Target Crop for Recommendations</label>
+                        <input type="text" id="soilCropName" class="form-control" value="Paddy / Rice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="soilLanguage" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" id="btnAnalyzeSoilPdf" disabled style="margin-top:12px;">
+                    <i class="fa-solid fa-flask"></i> Extract & Analyze Soil Card
+                </button>
+            </form>
+
+            <form id="soilManualForm" style="display:none; margin-top:16px;">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Soil pH (1:2.5)</label>
+                        <input type="number" step="0.1" id="mPh" class="form-control" value="6.8" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Electrical Conductivity (dS/m)</label>
+                        <input type="number" step="0.01" id="mEc" class="form-control" value="0.45" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Organic Carbon (%)</label>
+                        <input type="number" step="0.01" id="mOc" class="form-control" value="0.58" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Available Nitrogen (kg/ha)</label>
+                        <input type="number" step="1" id="mN" class="form-control" value="240" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Available Phosphorus (kg/ha)</label>
+                        <input type="number" step="0.1" id="mP" class="form-control" value="18.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Available Potassium (kg/ha)</label>
+                        <input type="number" step="1" id="mK" class="form-control" value="210" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top:12px;">
+                    <i class="fa-solid fa-calculator"></i> Evaluate Parameters
+                </button>
+            </form>
+        </div>
+
+        <div class="dashboard-card" id="soilResultCard">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-chart-column"></i> Soil Health Report & Advice</h3>
+                <span class="badge-status badge-verified" id="soilStatusBadge">Ready</span>
+            </div>
+            <div class="card-body" id="soilReportOutput">
+                <div class="metrics-grid" style="grid-template-columns: repeat(3, 1fr); gap:12px; margin-bottom:20px;">
+                    <div class="metric-card" style="padding:12px;">
+                        <div>
+                            <span class="metric-label">Soil pH</span>
+                            <h3 class="metric-value" id="cardPhVal">6.8</h3>
+                            <span class="metric-subtext" id="cardPhStatus" style="color:var(--status-success);">Neutral (Optimal)</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" style="padding:12px;">
+                        <div>
+                            <span class="metric-label">Available N</span>
+                            <h3 class="metric-value" id="cardNVal">240 kg/ha</h3>
+                            <span class="metric-subtext" id="cardNStatus" style="color:var(--status-warning);">Low Deficiency</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" style="padding:12px;">
+                        <div>
+                            <span class="metric-label">Available P</span>
+                            <h3 class="metric-value" id="cardPVal">18.5 kg/ha</h3>
+                            <span class="metric-subtext" id="cardPStatus" style="color:var(--status-success);">Medium</span>
+                        </div>
+                    </div>
+                </div>
+                <div style="background:white; border:1px solid var(--border-color); border-radius:var(--radius-md); padding:16px; margin-bottom:20px;">
+                    <h4 style="font-size:0.88rem; font-weight:700; margin-bottom:10px;">Macronutrient Profile vs ICAR Baseline (kg/ha)</h4>
+                    <div style="height:200px;"><canvas id="soilNpkChart"></canvas></div>
+                </div>
+                <div class="recommendation-content" id="soilRecommendationText">
+                    <p><strong>Baseline Fertility Advice:</strong> Incorporate 5 tonnes/acre of farmyard manure (FYM) to enhance soil organic carbon. Apply bio-fertilizers (Azospirillum and Phosphobacteria @ 2kg/acre each) blended with compost during basal application.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     VIEW 5: CROPMATCH AI
+     ========================================================================= -->
+<div id="view-crop-match" class="app-view">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-wheat-awn"></i> CropMatch AI</h2>
+        <p class="section-subtitle">Evidence-based crop recommendation engine balancing soil characteristics, seasonal rainfall, water availability, and rotational benefits.</p>
+    </div>
+    <div class="doctor-grid">
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-sliders"></i> Agronomic Farm Parameters</h3>
+                <span class="badge-status badge-verified">Recommendation Engine</span>
+            </div>
+            <form id="cropMatchForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Farm Location / District</label>
+                        <input type="text" id="cropLocation" class="form-control" value="Coimbatore, Tamil Nadu" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Soil Type</label>
+                        <select id="cropSoilType" class="form-control" required>
+                            <option value="Red Loamy Soil" selected>Red Loamy Soil</option>
+                            <option value="Black Cotton Soil">Black Cotton Soil</option>
+                            <option value="Alluvial Soil">Alluvial Soil</option>
+                            <option value="Clayey Loam">Clayey Loam</option>
+                            <option value="Sandy Loam">Sandy Loam</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Soil pH Level</label>
+                        <input type="number" step="0.1" id="cropPh" class="form-control" value="6.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Farming Season</label>
+                        <select id="cropSeason" class="form-control" required>
+                            <option value="Kharif (Monsoon / Autumn)" selected>Kharif (Monsoon / Autumn)</option>
+                            <option value="Rabi (Winter / Spring)">Rabi (Winter / Spring)</option>
+                            <option value="Zaid (Summer)">Zaid (Summer)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Water Availability</label>
+                        <select id="cropWater" class="form-control" required>
+                            <option value="Moderate (Borewell & Seasonal Canal)" selected>Moderate (Borewell & Seasonal Canal)</option>
+                            <option value="Abundant (Perennial Canal / River)">Abundant (Perennial Canal / River)</option>
+                            <option value="Scarce (Rainfed Only / Groundwater Stress)">Scarce (Rainfed Only / Groundwater Stress)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Previous Crop Harvested</label>
+                        <input type="text" id="cropPrevCrop" class="form-control" placeholder="e.g. Blackgram / Pulses">
+                    </div>
+                </div>
+                <div class="form-row" style="margin-top:10px;">
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="cropLang" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button type="submit" class="btn btn-primary btn-block" id="btnMatchCrops">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Match Suitable Crops
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="dashboard-card" id="cropResultCard">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-seedling"></i> Recommended Crops</h3>
+                <span class="badge-status badge-verified" id="cropResultBadge">Ready</span>
+            </div>
+            <div class="card-body" id="cropRecommendationOutput">
+                <div class="empty-state-box">
+                    <i class="fa-solid fa-wheat-awn empty-icon"></i>
+                    <h4>Ready to Match Crops</h4>
+                    <p class="text-muted">Adjust your farm parameters on the left and click "Match Suitable Crops" to generate evidence-aware crop options.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     VIEW 6: AQUASMART IRRIGATION
+     ========================================================================= -->
+<div id="view-aquasmart" class="app-view">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-droplet"></i> AquaSmart – Smart Irrigation Advisor</h2>
+        <p class="section-subtitle">Calculate crop stage-specific water requirements, optimize drip running schedules, and protect yields against critical water stress.</p>
+    </div>
+    <div class="doctor-grid">
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-faucet-drip"></i> Irrigation Parameters</h3>
+                <span class="badge-status badge-verified">Water Optimization</span>
+            </div>
+            <form id="aquaSmartForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Select Crop</label>
+                        <select id="aquaCrop" class="form-control" required>
+                            <option value="Paddy / Rice" selected>Paddy / Rice</option>
+                            <option value="Sugarcane">Sugarcane</option>
+                            <option value="Cotton">Cotton</option>
+                            <option value="Maize">Maize</option>
+                            <option value="Tomato">Tomato</option>
+                            <option value="Banana">Banana</option>
+                            <option value="Turmeric">Turmeric</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Current Growth Stage</label>
+                        <select id="aquaStage" class="form-control" required>
+                            <option value="Germination / Nursery">Germination / Nursery</option>
+                            <option value="Vegetative Stage" selected>Vegetative Stage</option>
+                            <option value="Tillering / Branching">Tillering / Branching</option>
+                            <option value="Panicle Initiation / Flowering">Panicle Initiation / Flowering (Critical)</option>
+                            <option value="Fruit / Grain Development">Fruit / Grain Development</option>
+                            <option value="Maturity / Pre-harvest">Maturity / Pre-harvest</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Soil Type</label>
+                        <select id="aquaSoil" class="form-control" required>
+                            <option value="Red Loamy Soil" selected>Red Loamy Soil</option>
+                            <option value="Black Cotton Soil">Black Cotton Soil (High Retention)</option>
+                            <option value="Sandy Loam">Sandy Loam (Rapid Drainage)</option>
+                            <option value="Clayey Loam">Clayey Loam</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Irrigation Architecture</label>
+                        <select id="aquaSystem" class="form-control" required>
+                            <option value="Drip Irrigation (In-line emit)" selected>Drip Irrigation (In-line emit)</option>
+                            <option value="Micro-Sprinkler">Micro-Sprinkler</option>
+                            <option value="Furrow / Basin Irrigation">Furrow / Basin Irrigation</option>
+                            <option value="Shallow Standing Water (Flood)">Shallow Standing Water (Flood)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row" style="margin-top:10px;">
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="aquaLang" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button type="submit" class="btn btn-primary btn-block" id="btnGetIrrigationAdvice">
+                            <i class="fa-solid fa-calculator"></i> Calculate Water Guidance
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-chart-pie"></i> Water Management Protocol</h3>
+                <span class="badge-status badge-verified" id="aquaStatusBadge">Ready</span>
+            </div>
+            <div class="card-body" id="aquaResultBody">
+                <div class="empty-state-box">
+                    <i class="fa-solid fa-faucet empty-icon"></i>
+                    <h4>Ready to Advise</h4>
+                    <p class="text-muted">Choose your crop and growth stage to generate tailored water schedule and conservation tips.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     VIEW 7: SCHEME NAVIGATOR RAG
+     ========================================================================= -->
+<div id="view-schemes" class="app-view">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-file-shield"></i> Scheme Navigator (RAG Engine)</h2>
+        <p class="section-subtitle">Grounded agricultural government scheme intelligence backed by PyMuPDF, FAISS vector similarity search, and Gemini embeddings.</p>
+    </div>
+    <div class="doctor-grid">
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-magnifying-glass-chart"></i> Ask Scheme Question</h3>
+                <span class="badge-status badge-verified">FAISS RAG</span>
+            </div>
+            <form id="schemeUploadForm" style="margin-bottom:20px; padding-bottom:16px; border-bottom:1px dashed var(--border-color);">
+                <label style="font-size:0.84rem; font-weight:700;">Upload Official Scheme PDF (Optional)</label>
+                <div style="display:flex; gap:10px; margin-top:6px;">
+                    <input type="file" id="schemePdfFile" accept="application/pdf" class="form-control" style="padding:6px;" required>
+                    <button type="submit" class="btn btn-sm btn-primary" id="btnUploadScheme">
+                        <i class="fa-solid fa-upload"></i> Index PDF
+                    </button>
+                </div>
+                <div id="uploadStatusMsg" style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+                    Pre-indexed: PM-KISAN Guidelines, PMFBY Crop Insurance, PMKSY Micro-Irrigation, SMAM Mechanization.
+                </div>
+            </form>
+
+            <form id="schemeQueryForm">
+                <div class="form-group">
+                    <label>Ask a Question About Subsidies, Eligibility, or Documents</label>
+                    <textarea id="schemeQuestionInput" class="form-control" rows="3" placeholder="e.g. What are the eligibility and exclusion criteria for PM-KISAN? How much subsidy for drip irrigation in Tamil Nadu?" required></textarea>
+                </div>
+                <div class="form-row" style="margin-top:10px;">
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="schemeLang" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button type="submit" class="btn btn-primary btn-block" id="btnQueryScheme">
+                            <i class="fa-solid fa-brain"></i> Ask Scheme Navigator
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <div style="margin-top:16px;">
+                <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Frequently Asked Scheme Queries:</label>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:6px;">
+                    <button class="quick-chip" style="text-align:left; border-radius:var(--radius-sm);" data-prompt="What are the eligibility criteria and exclusion list for PM-KISAN?">📌 PM-KISAN Eligibility & Exclusions</button>
+                    <button class="quick-chip" style="text-align:left; border-radius:var(--radius-sm);" data-prompt="What is the premium rate for Kharif and Rabi crops under PM Fasal Bima Yojana (PMFBY)?">🌾 PMFBY Crop Insurance Premium Rates</button>
+                    <button class="quick-chip" style="text-align:left; border-radius:var(--radius-sm);" data-prompt="What is the financial subsidy for small farmers installing drip irrigation under PMKSY?">💧 Drip Irrigation Subsidy under PMKSY</button>
+                    <button class="quick-chip" style="text-align:left; border-radius:var(--radius-sm);" data-prompt="PM-கிசான் திட்டத்தின் பலன்கள் மற்றும் தகுதிகள் என்ன?">🇮🇳 PM-கிசான் திட்ட தகுதிகள் (தமிழ்)</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-quote-left"></i> Grounded Scheme Response</h3>
+                <span class="badge-status badge-verified" id="ragStatusBadge">Ready</span>
+            </div>
+            <div class="card-body" id="schemeAnswerBody">
+                <div class="empty-state-box">
+                    <i class="fa-solid fa-file-shield empty-icon"></i>
+                    <h4>Awaiting Scheme Query</h4>
+                    <p class="text-muted">Type a question or click a frequent query to retrieve verifiable answers grounded in official scheme guidelines.</p>
+                </div>
+            </div>
+            <div id="schemeCitationsBox" style="display:none; padding:16px; background:#f8faf8; border-top:1px solid var(--border-color);">
+                <h4 style="font-size:0.82rem; font-weight:700; color:var(--forest-800); margin-bottom:8px;">
+                    <i class="fa-solid fa-book-bookmark"></i> Source Document References:
+                </h4>
+                <div id="citationsList" style="display:flex; flex-direction:column; gap:6px; font-size:0.78rem;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     VIEW 8: AGRIMARKET INTELLIGENCE
+     ========================================================================= -->
+<div id="view-market" class="app-view">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-chart-line"></i> AgriMarket Intelligence</h2>
+        <p class="section-subtitle">Real-time commodity price tracking across APMC mandis with transparent source attribution and historical trend analysis.</p>
+    </div>
+    <div class="dashboard-card" style="margin-bottom:24px;">
+        <div class="card-body" style="padding:16px;">
+            <div class="form-row" style="align-items:center;">
+                <div class="form-group" style="flex:2;">
+                    <div style="position:relative;">
+                        <input type="text" id="marketSearchInput" class="form-control" placeholder="Search commodity (e.g. Paddy, Turmeric, Tomato, Wheat, Cotton)..." style="padding-left:36px;">
+                        <i class="fa-solid fa-magnifying-glass" style="position:absolute; left:12px; top:12px; color:var(--text-muted);"></i>
+                    </div>
+                </div>
+                <div class="form-group" style="flex:1;">
+                    <select id="marketStateFilter" class="form-control">
+                        <option value="">All States</option>
+                        <option value="Tamil Nadu">Tamil Nadu</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Haryana">Haryana</option>
+                    </select>
+                </div>
+                <div class="form-group" style="flex:0.5;">
+                    <button class="btn btn-primary btn-block" id="btnFilterMarket"><i class="fa-solid fa-filter"></i> Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-split-grid">
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-store"></i> Active Mandi Commodity Rates</h3>
+                <span class="badge-status badge-verified">Daily APMC Bulletin</span>
+            </div>
+            <div class="card-body" style="padding:0; overflow-x:auto;">
+                <table class="agri-table" id="marketTable">
+                    <thead>
+                        <tr><th>Commodity</th><th>Mandi / Location</th><th>Modal Price</th><th>Price Range</th><th>Action</th></tr>
+                    </thead>
+                    <tbody id="marketTableBody">
+                        <tr><td colspan="5" style="text-align:center; padding:20px; color:var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> Loading APMC rates...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-chart-area"></i> 6-Month Price Trend</h3>
+                <span class="badge-status badge-verified" id="chartCommodityLabel">Paddy (Common)</span>
+            </div>
+            <div class="card-body">
+                <div style="height:260px;"><canvas id="marketTrendChart"></canvas></div>
+                <div class="card-alert alert-info" style="margin-top:16px;">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <span><strong>Mandi Advisory:</strong> Modal price for Paddy has shown steady upward momentum (+7.9% over 6 months). Ideal selling window occurs within 2 weeks post harvest.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     VIEW 9: VIRTUAL FARM TWIN & RISK RADAR
+     ========================================================================= -->
+<div id="view-farm-twin" class="app-view">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-network-wired"></i> Virtual Farm Twin & Risk Radar</h2>
+        <p class="section-subtitle">Simulate agronomic shifts, hypothetical weather anomalies, and evaluate farm vulnerability before making field investments.</p>
+    </div>
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-icon-box bg-forest"><i class="fa-solid fa-seedling"></i></div>
+            <div class="metric-data"><span class="metric-label">Simulated Crop</span><h3 class="metric-value" id="twinCrop">Paddy / Rice</h3><span class="metric-subtext">CO-51 Variety</span></div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon-box bg-emerald"><i class="fa-solid fa-earth-americas"></i></div>
+            <div class="metric-data"><span class="metric-label">Soil & Landholding</span><h3 class="metric-value" id="twinSize">4.5 Acres</h3><span class="metric-subtext" id="twinSoil">Red Loamy Soil</span></div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon-box bg-teal"><i class="fa-solid fa-faucet-drip"></i></div>
+            <div class="metric-data"><span class="metric-label">Water Architecture</span><h3 class="metric-value" id="twinIrrigation">Drip System</h3><span class="metric-subtext">Borewell & Canal</span></div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon-box bg-amber"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="metric-data"><span class="metric-label">Overall Risk Status</span><h3 class="metric-value" style="color:var(--status-warning);">Moderate</h3><span class="metric-subtext">Watch Water Table</span></div>
+        </div>
+    </div>
+    <div class="dashboard-split-grid">
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-flask"></i> Hypothetical Scenario Simulator</h3>
+                <span class="badge-status badge-verified">Simulation Engine</span>
+            </div>
+            <form id="twinSimulatorForm">
+                <div class="form-group">
+                    <label>Describe a Hypothetical Agronomic Scenario to Simulate:</label>
+                    <textarea id="scenarioInput" class="form-control" rows="3" placeholder="e.g. What if monsoon rains are delayed by 4 weeks and temperature rises by 3 degrees Celsius during flowering?" required></textarea>
+                </div>
+                <div style="margin:10px 0;">
+                    <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Quick Scenarios:</span>
+                    <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">
+                        <button type="button" class="quick-chip" data-scenario="What happens if monsoon is delayed by 3 weeks during transplanting?">🌧️ 3-week delayed monsoon</button>
+                        <button type="button" class="quick-chip" data-scenario="What if daytime temperature exceeds 38°C during panicle initiation?">🔥 Heatwave during flowering</button>
+                        <button type="button" class="quick-chip" data-scenario="What if I switch completely from canal flood to drip fertigation?">💧 Switch to Drip Fertigation</button>
+                    </div>
+                </div>
+                <div class="form-row" style="margin-top:14px;">
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="simLanguage" class="form-control"><option value="en" selected>English</option><option value="ta">தமிழ் (Tamil)</option></select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button type="submit" class="btn btn-primary btn-block" id="btnRunSimulation"><i class="fa-solid fa-play"></i> Run Simulation</button>
+                    </div>
+                </div>
+            </form>
+            <div class="simulation-output-box" id="simulationOutputBox" style="margin-top:16px; display:none; padding:16px; background:#fafdfb; border:1px solid var(--border-color); border-radius:var(--radius-md);">
+                <h4 style="font-size:0.92rem; font-weight:700; color:var(--forest-900); margin-bottom:8px;"><i class="fa-solid fa-chart-line"></i> Simulation Agronomic Analysis:</h4>
+                <div id="simulationResultText" style="font-size:0.88rem; line-height:1.6;"></div>
+            </div>
+        </div>
+
+        <div class="dashboard-card" id="risk-radar">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-shield-halved"></i> Farm Risk Radar</h3>
+                <span class="badge-status badge-verified">Risk Assessment</span>
+            </div>
+            <div class="card-body">
+                <div class="risk-meter-list">
+                    <div class="risk-item">
+                        <div class="risk-header"><span class="risk-title"><i class="fa-solid fa-droplet-slash"></i> Water & Drought Stress</span><span class="risk-score" style="color:var(--status-warning);">Moderate (42%)</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 42%; background: #f59e0b;"></div></div>
+                        <span class="risk-note">Borewell yields steady; schedule early morning drip runs.</span>
+                    </div>
+                    <div class="risk-item" style="margin-top:16px;">
+                        <div class="risk-header"><span class="risk-title"><i class="fa-solid fa-temperature-arrow-up"></i> Heatwave / Foliar Burn Hazard</span><span class="risk-score" style="color:var(--status-success);">Low (18%)</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 18%; background: #10b981;"></div></div>
+                        <span class="risk-note">Current temperatures favorable for vegetative tillering.</span>
+                    </div>
+                    <div class="risk-item" style="margin-top:16px;">
+                        <div class="risk-header"><span class="risk-title"><i class="fa-solid fa-bug"></i> Stem Borer & Leaf Folder Risk</span><span class="risk-score" style="color:var(--status-danger);">Elevated (68%)</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 68%; background: #ef4444;"></div></div>
+                        <span class="risk-note">High relative humidity (>80%) favors stem borer egg hatching. Install pheromone traps.</span>
+                    </div>
+                    <div class="risk-item" style="margin-top:16px;">
+                        <div class="risk-header"><span class="risk-title"><i class="fa-solid fa-flask"></i> Nitrogen Leaching & Runoff</span><span class="risk-score" style="color:var(--status-warning);">Medium (35%)</span></div>
+                        <div class="progress-bar-bg"><div class="progress-bar-fill" style="width: 35%; background: #f59e0b;"></div></div>
+                        <span class="risk-note">Use split urea applications blended with neem cake to prevent volatilization.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     VIEW 10: FARMING CALENDAR
+     ========================================================================= -->
+<div id="view-calendar" class="app-view">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-regular fa-calendar-days"></i> Smart Farming Calendar</h2>
+        <p class="section-subtitle">Track crop growth stages, schedule critical agronomic activities, set reminders, and log field operations.</p>
+    </div>
+    <div class="doctor-grid">
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-calendar-plus"></i> Schedule New Activity</h3>
+                <span class="badge-status badge-verified">Activity Scheduler</span>
+            </div>
+            <form id="calendarAddForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Crop Name</label>
+                        <input type="text" id="calCrop" class="form-control" value="Paddy / Rice" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Activity Name</label>
+                        <input type="text" id="calActivity" class="form-control" placeholder="e.g. Second Foliar Spray of Micronutrients" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Crop Growth Stage</label>
+                        <select id="calStage" class="form-control" required>
+                            <option value="Land Preparation">Land Preparation</option>
+                            <option value="Sowing / Nursery">Sowing / Nursery</option>
+                            <option value="Transplanting">Transplanting</option>
+                            <option value="Vegetative Stage" selected>Vegetative Stage</option>
+                            <option value="Tillering Stage">Tillering Stage</option>
+                            <option value="Panicle Initiation">Panicle Initiation</option>
+                            <option value="Flowering Stage">Flowering Stage</option>
+                            <option value="Grain Filling / Milking">Grain Filling / Milking</option>
+                            <option value="Harvesting">Harvesting</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Scheduled Execution Date</label>
+                        <input type="date" id="calDate" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Agronomic Instructions / Notes</label>
+                    <textarea id="calNotes" class="form-control" rows="2" placeholder="e.g. Spray 2ml Pseudomonas fluorescens per liter of water"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top:10px;"><i class="fa-solid fa-plus"></i> Add to Farming Schedule</button>
+            </form>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-list-check"></i> Field Activity Schedule</h3>
+                <span class="badge-status badge-verified" id="activityCountBadge">Loading...</span>
+            </div>
+            <div class="card-body" style="padding:0; overflow-x:auto;">
+                <table class="agri-table" id="calendarTable">
+                    <thead>
+                        <tr><th>Crop & Stage</th><th>Activity</th><th>Scheduled Date</th><th>Status</th><th>Actions</th></tr>
+                    </thead>
+                    <tbody id="calendarTableBody">
+                        <tr><td colspan="5" style="text-align:center; padding:20px; color:var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> Loading calendar activities...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     VIEW 11: FARM BUDGET AI
+     ========================================================================= -->
+<div id="view-budget" class="app-view">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-wallet"></i> Farm Budget AI</h2>
+        <p class="section-subtitle">Track, categorize, and optimize your crop cultivation expenditures with visual cost breakdown charts and exportable reports.</p>
+    </div>
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-icon-box bg-emerald"><i class="fa-solid fa-indian-rupee-sign"></i></div>
+            <div class="metric-data"><span class="metric-label">Total Expenditure</span><h3 class="metric-value" id="budTotal">₹0</h3><span class="metric-subtext">Active Season</span></div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon-box bg-forest"><i class="fa-solid fa-calculator"></i></div>
+            <div class="metric-data"><span class="metric-label">Cost Per Acre</span><h3 class="metric-value" id="budCostPerAcre">₹0</h3><span class="metric-subtext" id="budAcreLabel">Based on 4.5 Acres</span></div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon-box bg-teal"><i class="fa-solid fa-receipt"></i></div>
+            <div class="metric-data"><span class="metric-label">Recorded Entries</span><h3 class="metric-value" id="budItemCount">0</h3><span class="metric-subtext">Expenditure entries</span></div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon-box bg-amber"><i class="fa-solid fa-file-csv"></i></div>
+            <div class="metric-data"><span class="metric-label">Export Ledger</span><h3 class="metric-value" style="font-size:1.1rem; padding-top:4px;"><button class="btn btn-sm btn-primary" id="btnExportCsv"><i class="fa-solid fa-download"></i> Download CSV</button></h3><span class="metric-subtext">Auditable records</span></div>
+        </div>
+    </div>
+    <div class="doctor-grid">
+        <div class="dashboard-card">
+            <div class="card-header"><h3 class="card-title"><i class="fa-solid fa-plus-circle"></i> Log Cultivation Expense</h3><span class="badge-status badge-verified">Expense Tracker</span></div>
+            <form id="budgetAddForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Expense Category</label>
+                        <select id="expCategory" class="form-control" required>
+                            <option value="Seeds" selected>Seeds / Planting Material</option>
+                            <option value="Fertilizers">Fertilizers & Soil Amendments</option>
+                            <option value="Labour">Labour & Field Operations</option>
+                            <option value="Irrigation">Irrigation & Power / Fuel</option>
+                            <option value="Equipment">Equipment Rental & Machinery</option>
+                            <option value="Transportation">Transportation & Logistics</option>
+                            <option value="Other">Crop Protection & Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Item Name / Description</label><input type="text" id="expItem" class="form-control" placeholder="e.g. Certified Seed CO-51" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group"><label>Amount (₹)</label><input type="number" step="1" id="expAmount" class="form-control" placeholder="e.g. 4500" required></div>
+                    <div class="form-group"><label>Date of Expense</label><input type="date" id="expDate" class="form-control" required></div>
+                </div>
+                <div class="form-group"><label>Notes / Vendor</label><input type="text" id="expNotes" class="form-control" placeholder="e.g. Purchased from TNAU Seed Centre"></div>
+                <button type="submit" class="btn btn-primary btn-block" style="margin-top:12px;"><i class="fa-solid fa-check"></i> Save Expense Entry</button>
+            </form>
+        </div>
+        <div class="dashboard-card">
+            <div class="card-header"><h3 class="card-title"><i class="fa-solid fa-chart-pie"></i> Cost Allocation by Category</h3><span class="badge-status badge-verified">Breakdown</span></div>
+            <div class="card-body"><div style="height:220px; display:flex; justify-content:center;"><canvas id="budgetDonutChart"></canvas></div></div>
+        </div>
+    </div>
+    <div class="dashboard-card" style="margin-top:24px;">
+        <div class="card-header"><h3 class="card-title"><i class="fa-solid fa-table-list"></i> Itemized Expense Ledger</h3><span class="badge-status badge-verified">SQLite Database</span></div>
+        <div class="card-body" style="padding:0; overflow-x:auto;">
+            <table class="agri-table" id="budgetTable">
+                <thead><tr><th>Date</th><th>Category</th><th>Item Description</th><th>Amount (₹)</th><th>Notes</th><th>Action</th></tr></thead>
+                <tbody id="budgetTableBody"><tr><td colspan="6" style="text-align:center; padding:20px; color:var(--text-muted);"><i class="fa-solid fa-spinner fa-spin"></i> Loading expenses...</td></tr></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     VIEW 12: SETTINGS
+     ========================================================================= -->
+<div id="view-settings" class="app-view">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-gear"></i> System Settings & Profile</h2>
+        <p class="section-subtitle">Manage farmer profile credentials, language preferences, AI engine parameters, and farm hardware telemetry settings.</p>
+    </div>
+    <div class="doctor-grid">
+        <div class="dashboard-card">
+            <div class="card-header"><h3 class="card-title"><i class="fa-solid fa-user-gear"></i> Farmer Profile</h3><span class="badge-status badge-verified">Configured</span></div>
+            <form id="settingsProfileForm">
+                <div class="form-row">
+                    <div class="form-group"><label>Farmer Name</label><input type="text" id="setFarmerName" class="form-control" value="Ramesh Kumar" required></div>
+                    <div class="form-group"><label>Phone / WhatsApp</label><input type="text" id="setFarmerPhone" class="form-control" value="+91 98765 43210"></div>
+                </div>
+                <div class="form-group"><label>Location / District</label><input type="text" id="setFarmerLocation" class="form-control" value="Coimbatore, Tamil Nadu" required></div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Default Language</label>
+                        <select id="setDefaultLang" class="form-control"><option value="en" selected>English (EN)</option><option value="ta">தமிழ் (Tamil)</option></select>
+                    </div>
+                    <div class="form-group"><label>Primary Crop</label><input type="text" id="setPrimaryCrop" class="form-control" value="Paddy / Rice" required></div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="margin-top:10px;"><i class="fa-solid fa-save"></i> Save Profile Settings</button>
+            </form>
+        </div>
+        <div class="dashboard-card">
+            <div class="card-header"><h3 class="card-title"><i class="fa-solid fa-microchip"></i> AI & Database Status</h3><span class="badge-status badge-verified">Active</span></div>
+            <div class="card-body">
+                <div class="profile-summary-list">
+                    <div class="summary-item"><span class="summary-label">Generative AI Engine:</span><span class="summary-value" id="setGeminiModel">Google Gemini 3.5 Flash-Lite</span></div>
+                    <div class="summary-item"><span class="summary-label">Vector Embeddings:</span><span class="summary-value">gemini-embedding-001 (3072-D)</span></div>
+                    <div class="summary-item"><span class="summary-label">Vector Store:</span><span class="summary-value">FAISS CPU IndexFlatL2</span></div>
+                    <div class="summary-item"><span class="summary-label">Relational Database:</span><span class="summary-value">SQLite (agriverse.db)</span></div>
+                    <div class="summary-item"><span class="summary-label">Security Protocol:</span><span class="summary-value">Key In .env &bull; Parameterized Queries</span></div>
+                </div>
+                <div class="card-alert alert-info" style="margin-top:16px;">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>All AI requests are routed securely through the local backend. Your credentials are never exposed in the browser.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================================
+     MODALS
+     ========================================================================= -->
+<!-- Modal: Add New Farming Activity -->
+<div class="agri-modal" id="modalAddActivity" style="display:none;">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-calendar-plus"></i> Schedule Farming Activity</h3>
+            <button class="modal-close-btn" id="btnCloseActivityModal">&times;</button>
+        </div>
+        <form id="formAddActivity">
+            <div class="modal-body">
+                <div class="form-group"><label>Crop Name</label><input type="text" id="actCropName" class="form-control" value="Paddy / Rice" required></div>
+                <div class="form-group"><label>Activity Name</label><input type="text" id="actName" class="form-control" placeholder="e.g. Basal Fertilizer Application" required></div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Growth Stage</label>
+                        <select id="actStage" class="form-control" required>
+                            <option value="Land Preparation">Land Preparation</option>
+                            <option value="Sowing / Transplanting">Sowing / Transplanting</option>
+                            <option value="Vegetative Stage" selected>Vegetative Stage</option>
+                            <option value="Tillering Stage">Tillering Stage</option>
+                            <option value="Panicle Initiation">Panicle Initiation</option>
+                            <option value="Flowering Stage">Flowering Stage</option>
+                            <option value="Grain Filling">Grain Filling</option>
+                            <option value="Harvesting">Harvesting</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Scheduled Date</label><input type="date" id="actDate" class="form-control" required></div>
+                </div>
+                <div class="form-group"><label>Notes / Agronomic Instructions</label><textarea id="actNotes" class="form-control" rows="2" placeholder="e.g. Apply 50kg Neem cake per acre"></textarea></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-white" style="color:#555;" id="btnCancelActivity">Cancel</button>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> Save Activity</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal: Edit Farm Profile -->
+<div class="agri-modal" id="modalEditProfile" style="display:none;">
+    <div class="modal-dialog">
+        <div class="modal-header">
+            <h3><i class="fa-solid fa-pen-to-square"></i> Update Farm Profile</h3>
+            <button class="modal-close-btn" id="btnCloseProfileModal">&times;</button>
+        </div>
+        <form id="formEditProfile">
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group"><label>Farm Name</label><input type="text" id="editFarmName" class="form-control" required></div>
+                    <div class="form-group"><label>Farm Size (Acres)</label><input type="number" step="0.1" id="editFarmSize" class="form-control" required></div>
+                </div>
+                <div class="form-group"><label>Location</label><input type="text" id="editLocation" class="form-control" required></div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Soil Type</label>
+                        <select id="editSoilType" class="form-control" required>
+                            <option value="Red Loamy Soil">Red Loamy Soil</option>
+                            <option value="Black Cotton Soil">Black Cotton Soil</option>
+                            <option value="Alluvial Soil">Alluvial Soil</option>
+                            <option value="Clayey Loam">Clayey Loam</option>
+                            <option value="Sandy Loam">Sandy Loam</option>
+                        </select>
+                    </div>
+                    <div class="form-group"><label>Primary Crop</label><input type="text" id="editPrimaryCrop" class="form-control" required></div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Irrigation Type</label>
+                        <select id="editIrrigation" class="form-control" required>
+                            <option value="Drip Irrigation">Drip Irrigation</option>
+                            <option value="Sprinkler Irrigation">Sprinkler Irrigation</option>
+                            <option value="Canal / Flood Irrigation">Canal / Flood Irrigation</option>
+                            <option value="Rainfed Only">Rainfed Only</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Water Availability</label>
+                        <select id="editWater" class="form-control" required>
+                            <option value="Abundant (Perennial Source)">Abundant (Perennial Source)</option>
+                            <option value="Moderate (Borewell & Seasonal Canal)">Moderate (Borewell & Seasonal Canal)</option>
+                            <option value="Scarce (Groundwater Depleted)">Scarce (Groundwater Depleted)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-white" style="color:#555;" id="btnCancelProfile">Cancel</button>
+                <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Save Profile</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

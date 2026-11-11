@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}Scheme Navigator – Agricultural Document Intelligence (RAG){% endblock %}
+{% block page_title %}Scheme Navigator{% endblock %}
+
+{% block content %}
+<div class="page-container">
+    <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-file-shield"></i> Scheme Navigator (RAG Engine)</h2>
+        <p class="section-subtitle">Grounded agricultural government scheme intelligence backed by PyMuPDF, FAISS vector similarity search, and Gemini embeddings.</p>
+    </div>
+
+    <div class="doctor-grid">
+        <!-- Document Upload & Query Card -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-magnifying-glass-chart"></i> Ask Scheme Question</h3>
+                <span class="badge-status badge-verified">FAISS RAG</span>
+            </div>
+
+            <!-- Upload Scheme PDF Form -->
+            <form id="schemeUploadForm" style="margin-bottom:20px; padding-bottom:16px; border-bottom:1px dashed var(--border-color);">
+                <label style="font-size:0.84rem; font-weight:700;">Upload Official Scheme PDF (Optional)</label>
+                <div style="display:flex; gap:10px; margin-top:6px;">
+                    <input type="file" id="schemePdfFile" accept="application/pdf" class="form-control" style="padding:6px;" required>
+                    <button type="submit" class="btn btn-sm btn-primary" id="btnUploadScheme">
+                        <i class="fa-solid fa-upload"></i> Index PDF
+                    </button>
+                </div>
+                <div id="uploadStatusMsg" style="font-size:0.75rem; color:var(--text-muted); margin-top:4px;">
+                    Pre-indexed: PM-KISAN Guidelines, PMFBY Crop Insurance, PMKSY Micro-Irrigation, SMAM Mechanization.
+                </div>
+            </form>
+
+            <!-- Question Form -->
+            <form id="schemeQueryForm">
+                <div class="form-group">
+                    <label>Ask a Question About Subsidies, Eligibility, or Documents</label>
+                    <textarea id="schemeQuestionInput" class="form-control" rows="3" placeholder="e.g. What are the eligibility and exclusion criteria for PM-KISAN? How much subsidy for drip irrigation in Tamil Nadu?" required></textarea>
+                </div>
+
+                <div class="form-row" style="margin-top:10px;">
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select id="schemeLang" class="form-control">
+                            <option value="en" selected>English</option>
+                            <option value="ta">தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:flex-end;">
+                        <button type="submit" class="btn btn-primary btn-block" id="btnQueryScheme">
+                            <i class="fa-solid fa-brain"></i> Ask Scheme Navigator
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Quick Scheme Questions -->
+            <div style="margin-top:16px;">
+                <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">Frequently Asked Scheme Queries:</label>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-top:6px;">
+                    <button class="quick-chip" style="text-align:left; border-radius:var(--radius-sm);" data-prompt="What are the eligibility criteria and exclusion list for PM-KISAN?">
+                        📌 PM-KISAN Eligibility & Exclusions
+                    </button>
+                    <button class="quick-chip" style="text-align:left; border-radius:var(--radius-sm);" data-prompt="What is the premium rate for Kharif and Rabi crops under PM Fasal Bima Yojana (PMFBY)?">
+                        🌾 PMFBY Crop Insurance Premium Rates
+                    </button>
+                    <button class="quick-chip" style="text-align:left; border-radius:var(--radius-sm);" data-prompt="What is the financial subsidy for small farmers installing drip irrigation under PMKSY?">
+                        💧 Drip Irrigation Subsidy under PMKSY
+                    </button>
+                    <button class="quick-chip" style="text-align:left; border-radius:var(--radius-sm);" data-prompt="PM-கிசான் திட்டத்தின் பலன்கள் மற்றும் தகுதிகள் என்ன?">
+                        🇮🇳 PM-கிசான் திட்ட தகுதிகள் (தமிழ்)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grounded RAG Output Card -->
+        <div class="dashboard-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fa-solid fa-quote-left"></i> Grounded Scheme Response</h3>
+                <span class="badge-status badge-verified" id="ragStatusBadge">Ready</span>
+            </div>
+            <div class="card-body" id="schemeAnswerBody">
+                <div class="empty-state-box">
+                    <i class="fa-solid fa-file-shield empty-icon"></i>
+                    <h4>Awaiting Scheme Query</h4>
+                    <p class="text-muted">Type a question or click a frequent query to retrieve verifiable answers grounded in official scheme guidelines.</p>
+                </div>
+            </div>
+            <!-- Source Citations Box -->
+            <div id="schemeCitationsBox" style="display:none; padding:16px; background:#f8faf8; border-top:1px solid var(--border-color);">
+                <h4 style="font-size:0.82rem; font-weight:700; color:var(--forest-800); margin-bottom:8px;">
+                    <i class="fa-solid fa-book-bookmark"></i> Source Document References:
+                </h4>
+                <div id="citationsList" style="display:flex; flex-direction:column; gap:6px; font-size:0.78rem;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
